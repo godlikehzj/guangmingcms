@@ -36,7 +36,7 @@
         <div class="animate form login_form">
             <section class="login_content">
                 <form>
-                    <h1>珠宝管理系统</h1>
+                    <h1>武穴光明管理系统</h1>
                     <div>
                         <input type="text" id="name" class="form-control" placeholder="Username" required="" />
                     </div>
@@ -53,7 +53,7 @@
                         <div class="clearfix"></div>
                         <br />
                         <div>
-                            <p>©2017 All Rights Reserved. 蛛网国际! is a jewelry website</p>
+                            <p>©2017 All Rights Reserved. 武穴光明乳业</p>
                         </div>
                     </div>
                 </form>

@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletRequest;
 public class IndexController {
     @RequestMapping("/")
     public String welcome(HttpServletRequest request, Model model) {
-        User user = (User)request.getSession().getAttribute("user");
-        if (user != null){
-            model.addAttribute("user", user);
-        }else{
-            return "login";
-        }
+//        User user = (User)request.getSession().getAttribute("user");
+//        if (user != null){
+//            model.addAttribute("user", user);
+//        }else{
+//            return "login";
+//        }
         return "index";
     }
 }

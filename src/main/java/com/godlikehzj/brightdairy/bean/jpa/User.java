@@ -9,6 +9,7 @@ import javax.persistence.Id;
 public class User {
     private String password;
     private String name;
+    private String cname;
     private String mobile;
     private Integer role;
     private Integer area;
@@ -34,6 +35,16 @@ public class User {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Basic
+    @Column(name = "cname")
+    public String getCname() {
+        return cname;
+    }
+
+    public void setCname(String cname) {
+        this.cname = cname;
     }
 
     @Basic
@@ -106,6 +117,7 @@ public class User {
         if (id != user.id) return false;
         if (password != null ? !password.equals(user.password) : user.password != null) return false;
         if (name != null ? !name.equals(user.name) : user.name != null) return false;
+        if (cname != null ? !cname.equals(user.cname) : user.cname != null) return false;
         if (mobile != null ? !mobile.equals(user.mobile) : user.mobile != null) return false;
         if (role != null ? !role.equals(user.role) : user.role != null) return false;
         if (area != null ? !area.equals(user.area) : user.area != null) return false;
@@ -119,6 +131,7 @@ public class User {
     public int hashCode() {
         int result = password != null ? password.hashCode() : 0;
         result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + (cname != null ? cname.hashCode() : 0);
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
         result = 31 * result + (role != null ? role.hashCode() : 0);
         result = 31 * result + (area != null ? area.hashCode() : 0);
