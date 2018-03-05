@@ -15,7 +15,7 @@ public class User {
     private Integer area;
     private String openId;
     private Integer status;
-    private int id;
+    private long id;
 
     @Basic
     @Column(name = "password")
@@ -78,7 +78,7 @@ public class User {
     }
 
     @Basic
-    @Column(name = "openId")
+    @Column(name = "open_id")
     public String getOpenId() {
         return openId;
     }
@@ -99,11 +99,11 @@ public class User {
 
     @Id
     @Column(name = "id")
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -137,7 +137,7 @@ public class User {
         result = 31 * result + (area != null ? area.hashCode() : 0);
         result = 31 * result + (openId != null ? openId.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + id;
+        result = 31 * result + (int) (id ^ (id >>> 32));
         return result;
     }
 }

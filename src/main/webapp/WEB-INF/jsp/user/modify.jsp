@@ -25,38 +25,39 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>创建用户</h2>
+                    <h2>修改用户</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <br />
                     <form id="add_user" data-parsley-validate class="form-horizontal form-label-left" role="form">
+                        <input type="text" id="user_id" class="none" value="${user.id}">
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名(拼音)<span class="required">*</span>
                             </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="name" required="required" value="${user.name}" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cname">姓名(中文)<span class="required">*</span>
                             </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="cname" name="cname" required="required" class="form-control col-md-7 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="cname" name="cname" required="required" value="${user.cname}" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">手机<span class="required">*</span>
                             </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="mobile" name="mobile" required="required" class="form-control col-md-7 col-xs-12">
+                            <div class="col-md-6 col-sm-6 col-xs-12">
+                                <input type="text" id="mobile" name="mobile" required="required" value="${user.mobile}" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">密码<span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="password" id="password" name="password" required="required" value="${user.password}" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
@@ -64,21 +65,21 @@
                             <div class="col-md-6 col-sm-6 col-xs-12">
                                 <div id="role" class="btn-group" data-toggle="buttons">
                                     <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        管理员:<input type="radio" class="flat" name="status" id="admin" value="0" checked="checked"/>
+                                        管理员:<input type="radio" class="flat" name="status" id="admin" value="0" <c:if test="${user.role == 0}">checked="checked"</c:if>/>
                                     </label>
                                     <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        送奶工:<input type="radio" class="flat" name="status" id="worker" value="1" />
+                                        送奶工:<input type="radio" class="flat" name="status" id="worker" value="1" <c:if test="${user.role == 1}">checked="checked"</c:if> />
                                     </label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12">选择片区</label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
+                            <div class="col-md-3 col-sm-3 col-xs-12">
                                 <select class="select2_single form-control" tabindex="-1" id="area_select">
                                     <option value="0">--</option>
                                     <c:forEach var="area" items="${areas}">
-                                        <option value="${area.id}">${area.name}</option>
+                                        <option value="${area.id}" <c:if test="${user.area == area.id}">selected="selected"</c:if>>${area.name}</option>
                                     </c:forEach>
                                 </select>
                             </div>
@@ -86,7 +87,7 @@
                         <div class="ln_solid"></div>
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="button" class="btn createbtn btn-success" onclick="addUser()">添加</button>
+                                <button type="button" class="btn createbtn btn-success" onclick="modifyUser()">修改</button>
                                 <button type="button" class="btn createbtn btn-primary" onclick="user.getList()">取消</button>
                             </div>
                         </div>
@@ -102,8 +103,9 @@
 
 <script>
     initicheck();
-    function addUser() {
+    function modifyUser() {
         var param = {};
+        param.id = $('#user_id').val();
         param.name = $('#name').val();
         param.cname = $('#cname').val();
         param.mobile = $('#mobile').val();
@@ -118,10 +120,12 @@
             alert("请填写中文姓名");
             return;
         }
+
         if (param.mobile === ""){
             alert("请填写手机");
             return;
         }
-        user.add(param);
+
+        user.modify(param);
     }
 </script>

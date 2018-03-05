@@ -43,7 +43,7 @@ var user = {
             },
             success : function(ret) {
                 if (ret.code === 0){
-                    window.location.href = "/cms";
+                    window.location.href = "/";
                 }else{
                     alert(ret.msg);
                 }
@@ -60,7 +60,7 @@ var user = {
             },
             success : function(ret) {
                 if (ret.code === 0){
-                    window.location.href = "/cms";
+                    window.location.href = "/";
                 }else{
                     alert(ret.msg);
                 }
@@ -140,6 +140,90 @@ var user = {
                 success : function(ret) {
                     if (ret.code === 0){
                         user.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    }
+
+    };
+var area = {
+    getList : function () {
+        var url = "area/list";
+        var param = {};
+        getContent(url, param);
+    },
+
+    toAdd : function () {
+        var url = "area/toAdd";
+        var param = {};
+        getContent(url, param);
+    },
+
+    add : function (params) {
+        if(window.confirm('你确定要添加吗？')){
+            $.ajax({
+                type : "POST",
+                url : "area/doAdd",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        area.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+
+    toModify : function (aid) {
+        var url = "area/toModify";
+        var param = {};
+        param.aid = aid;
+        getContent(url, param);
+    },
+    modify : function (params) {
+        if(window.confirm('你确定要修改吗？')){
+            $.ajax({
+                type : "POST",
+                url : "area/doModify",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        area.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+    delete : function (aid) {
+        var param = {};
+        param.aid = aid;
+        if(window.confirm('你确定要删除吗？')){
+            $.ajax({
+                type : "POST",
+                url : "area/delete",
+                data : param,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        area.getList();
                     }else{
                         alert(ret.msg);
                     }

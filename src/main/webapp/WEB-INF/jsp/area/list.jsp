@@ -15,7 +15,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>用户管理</h3>
+            <h3>地区管理</h3>
         </div>
 
     </div>
@@ -24,32 +24,27 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>用户列表</h2>
-                    <button type="button" class="btn createbtn btn-success" onclick="user.toAdd()">创建</button>
+                    <h2>地区列表</h2>
+                    <button type="button" class="btn createbtn btn-success" onclick="area.toAdd()">创建</button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>姓名</th>
-                            <th>角色</th>
-                            <th>手机</th>
-                            <th>地区</th>
+                            <th>id</th>
+                            <th>地区名</th>
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <c:forEach var="user" items="${users}">
+                        <c:forEach var="area" items="${areas}">
                             <tr>
-                                <td>${user.cname}</td>
-                                <td><c:if test="${user.role == 0}">管理员</c:if>
-                                    <c:if test="${user.role == 1}">送奶工</c:if></td>
-                                <td>${user.mobile}</td>
-                                <td><c:forEach var="area" items="${areas}"><c:if test="${area.id == user.area}">${area.name}</c:if> </c:forEach> </td>
-                                <td><a href="javascript:void(0);" onclick="user.toModify(${user.id})">修改</a> |
-                                    <a href="javascript:void(0);" onclick="user.delete(${user.id})">删除</a></td>
+                                <td>${area.id}</td>
+                                <td>${area.name}</td>
+                                <td><a href="javascript:void(0);" onclick="area.toModify(${area.id})">修改</a> |
+                                    <a href="javascript:void(0);" onclick="area.delete(${area.id})">删除</a></td>
                             </tr>
                         </c:forEach>
 

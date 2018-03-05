@@ -64,9 +64,9 @@
                                     <%--<li><a href="javascript:void(0)" onclick="home.page.getList(2)">加入我们</a></li>--%>
                                 <%--</ul>--%>
                             <%--</li>--%>
-                            <li><a href="javascript:void(0)" onclick="user.getList()"><i class="fa fa-user"></i> 用户管理 </a>
+                            <li><a href="javascript:void(0)" onclick="user.getList()"><i class="fa fa-user"></i> 员工管理 </a>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="commodity.getList()"><i class="fa  fa-shopping-cart"></i> 地区管理 </a>
+                            <li><a href="javascript:void(0)" onclick="area.getList()"><i class="fa  fa-truck"></i> 地区管理 </a>
                             </li>
                         </ul>
                     </div>
@@ -86,7 +86,7 @@
                     <ul class="nav navbar-nav navbar-right">
                         <li class="">
                             <a href="javascript:void(0);" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                <img src="images/head.png" alt="">admin
+                                <img src="images/head.png" alt="">${user.cname}
                                 <span class=" fa fa-angle-down"></span>
                             </a>
                             <ul class="dropdown-menu dropdown-usermenu pull-right">

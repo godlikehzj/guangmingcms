@@ -71,7 +71,7 @@
         var params = {};
 
         params.name = $("#name").val();
-        params.pwd = $("#pwd").val();
+        params.password = $("#pwd").val();
 
         user.login(params)
     }

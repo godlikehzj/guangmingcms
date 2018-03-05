@@ -40,7 +40,7 @@ public class UserController {
             }else{
                 response.setCode(0);
                 response.setMsg("登录成功");
-                request.getSession().setAttribute("user", user1);
+                request.getSession().setAttribute("user", user1.getName());
             }
         }
         return response;
@@ -59,6 +59,10 @@ public class UserController {
     public String getUserList(Model model){
         List<User> users = userRepository.findAll();
         model.addAttribute("users", users);
+
+        List<Area> areas = areaRepository.findAll();
+        model.addAttribute("areas", areas);
+
         return "user/list";
     }
 
@@ -80,6 +84,23 @@ public class UserController {
     public String toModifyUser(Model model, Long uid){
         User user = userRepository.findOne(uid);
         model.addAttribute("user", user);
+
+        List<Area> areas = areaRepository.findAll();
+        model.addAttribute("areas", areas);
         return "user/modify";
+    }
+
+    @RequestMapping(value = "doModify")
+    @ResponseBody
+    public Response doModifyUser(User user){
+        userRepository.save(user);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
+    }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public Response deleteUser(Long uid){
+        userRepository.delete(uid);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
     }
 }
