@@ -234,3 +234,87 @@ var area = {
         }
     }
 };
+
+var dairy = {
+    getList : function () {
+        var url = "dairy/list";
+        var param = {};
+        getContent(url, param);
+    },
+
+    toAdd : function () {
+        var url = "dairy/toAdd";
+        var param = {};
+        getContent(url, param);
+    },
+
+    add : function (params) {
+        if(window.confirm('你确定要添加吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/doAdd",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+
+    toModify : function (did) {
+        var url = "dairy/toModify";
+        var param = {};
+        param.did = did;
+        getContent(url, param);
+    },
+    modify : function (params) {
+        if(window.confirm('你确定要修改吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/doModify",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+    delete : function (did) {
+        var param = {};
+        param.did = did;
+        if(window.confirm('你确定要删除吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/delete",
+                data : param,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    }
+}

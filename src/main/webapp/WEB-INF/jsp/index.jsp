@@ -64,9 +64,11 @@
                                     <%--<li><a href="javascript:void(0)" onclick="home.page.getList(2)">加入我们</a></li>--%>
                                 <%--</ul>--%>
                             <%--</li>--%>
-                            <li><a href="javascript:void(0)" onclick="user.getList()"><i class="fa fa-user"></i> 员工管理 </a>
+                            <li><a href="javascript:void(0)" onclick="user.getList()"><i class="fa fa-user"></i>员工管理 </a>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="area.getList()"><i class="fa  fa-truck"></i> 地区管理 </a>
+                            <li><a href="javascript:void(0)" onclick="area.getList()"><i class="fa  fa-truck"></i>地区管理 </a>
+                            </li>
+                            <li><a href="javascript:void(0)" onclick="dairy.getList()"><i class="fa  fa-tint"></i>奶品管理 </a>
                             </li>
                         </ul>
                     </div>
