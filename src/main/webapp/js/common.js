@@ -317,4 +317,88 @@ var dairy = {
 
         }
     }
+};
+
+var customer = {
+    getList : function () {
+        var url = "customer/list";
+        var param = {};
+        getContent(url, param);
+    },
+
+    toAdd : function () {
+        var url = "customer/toAdd";
+        var param = {};
+        getContent(url, param);
+    },
+
+    add : function (params) {
+        if(window.confirm('你确定要添加吗？')){
+            $.ajax({
+                type : "POST",
+                url : "customer/doAdd",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        customer.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+
+    toModify : function (cid) {
+        var url = "customer/toModify";
+        var param = {};
+        param.cid = cid;
+        getContent(url, param);
+    },
+    modify : function (params) {
+        if(window.confirm('你确定要修改吗？')){
+            $.ajax({
+                type : "POST",
+                url : "customer/doModify",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        customer.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+    delete : function (cid) {
+        var param = {};
+        param.cid = cid;
+        if(window.confirm('你确定要删除吗？')){
+            $.ajax({
+                type : "POST",
+                url : "customer/delete",
+                data : param,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        customer.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    }
 }

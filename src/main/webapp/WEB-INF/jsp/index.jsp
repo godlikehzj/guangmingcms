@@ -70,6 +70,8 @@
                             </li>
                             <li><a href="javascript:void(0)" onclick="dairy.getList()"><i class="fa  fa-tint"></i>奶品管理 </a>
                             </li>
+                            <li><a href="javascript:void(0)" onclick="customer.getList()"><i class="fa  fa-users"></i>客户管理 </a>
+                            </li>
                         </ul>
                     </div>
                 </div>
