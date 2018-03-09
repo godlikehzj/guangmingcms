@@ -12,6 +12,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -44,6 +46,7 @@ public class CustomerController {
     @RequestMapping(value = "doAdd")
     @ResponseBody
     public Response doAddCustomer(Customer customer){
+        customer.setCreateTime(new Timestamp(new Date().getTime()));
         customerRepository.save(customer);
         return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
     }

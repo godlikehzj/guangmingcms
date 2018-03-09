@@ -2,7 +2,7 @@
   Created by IntelliJ IDEA.
   User: zhijunhu
   Date: 2018/3/9
-  Time: 14:33
+  Time: 17:19
   To change this template use File | Settings | File Templates.
 --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -15,7 +15,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>客户管理</h3>
+            <h3>订单管理</h3>
         </div>
 
     </div>
@@ -24,8 +24,8 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>客户列表</h2>
-                    <button type="button" class="btn createbtn btn-success" onclick="customer.toAdd()">创建</button>
+                    <h2>订单列表</h2>
+                    <button type="button" class="btn createbtn btn-success" onclick="order.toAdd()">创建</button>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
@@ -33,9 +33,8 @@
                         <thead>
                         <tr>
                             <th>姓名</th>
-                            <th>手机</th>
-                            <th>地址</th>
-                            <th>地区</th>
+                            <th>奶品</th>
+                            <th>数量</th>
                             <th>创建日期</th>
                             <th>来源</th>
                             <th>操作</th>
@@ -72,5 +71,6 @@
 <script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <script>
-        $('#datatable').dataTable();
+    $('#datatable').dataTable();
 </script>
+

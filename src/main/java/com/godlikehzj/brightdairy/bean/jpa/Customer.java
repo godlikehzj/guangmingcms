@@ -4,6 +4,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import java.sql.Timestamp;
 
 @Entity
 public class Customer {
@@ -13,6 +14,7 @@ public class Customer {
     private String addr;
     private long area;
     private byte channel;
+    private Timestamp createTime;
 
     @Id
     @Column(name = "id")
@@ -74,6 +76,16 @@ public class Customer {
         this.channel = channel;
     }
 
+    @Basic
+    @Column(name = "create_time")
+    public Timestamp getCreateTime() {
+        return createTime;
+    }
+
+    public void setCreateTime(Timestamp createTime) {
+        this.createTime = createTime;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -87,6 +99,7 @@ public class Customer {
         if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
         if (mobile != null ? !mobile.equals(customer.mobile) : customer.mobile != null) return false;
         if (addr != null ? !addr.equals(customer.addr) : customer.addr != null) return false;
+        if (createTime != null ? !createTime.equals(customer.createTime) : customer.createTime != null) return false;
 
         return true;
     }
@@ -99,6 +112,7 @@ public class Customer {
         result = 31 * result + (addr != null ? addr.hashCode() : 0);
         result = 31 * result + (int) (area ^ (area >>> 32));
         result = 31 * result + (int) channel;
+        result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;
     }
 }
