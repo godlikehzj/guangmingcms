@@ -32,16 +32,16 @@
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
-                            <th>id</th>
+                            <th>序号</th>
                             <th>地区名</th>
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <c:forEach var="area" items="${areas}">
+                        <c:forEach var="area" items="${areas}" varStatus="status">
                             <tr>
-                                <td>${area.id}</td>
+                                <td>${status.index + 1}</td>
                                 <td>${area.name}</td>
                                 <td><a href="javascript:void(0);" onclick="area.toModify(${area.id})">修改</a> |
                                     <a href="javascript:void(0);" onclick="area.delete(${area.id})">删除</a></td>

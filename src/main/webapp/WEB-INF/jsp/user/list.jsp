@@ -32,10 +32,12 @@
                     <table id="datatable" class="table table-striped table-bordered">
                         <thead>
                         <tr>
+                            <th>用户名</th>
                             <th>姓名</th>
                             <th>角色</th>
                             <th>手机</th>
-                            <th>地区</th>
+                            <th>片区</th>
+                            <th>状态</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -43,11 +45,14 @@
                         <tbody>
                         <c:forEach var="user" items="${users}">
                             <tr>
+                                <td>${user.name}</td>
                                 <td>${user.cname}</td>
                                 <td><c:if test="${user.role == 0}">管理员</c:if>
                                     <c:if test="${user.role == 1}">送奶工</c:if></td>
                                 <td>${user.mobile}</td>
                                 <td><c:forEach var="area" items="${areas}"><c:if test="${area.id == user.area}">${area.name}</c:if> </c:forEach> </td>
+                                <td><c:if test="${user.status == 0}">失效</c:if>
+                                    <c:if test="${user.status == 1}">激活</c:if></td>
                                 <td><a href="javascript:void(0);" onclick="user.toModify(${user.id})">修改</a> |
                                     <a href="javascript:void(0);" onclick="user.delete(${user.id})">删除</a></td>
                             </tr>

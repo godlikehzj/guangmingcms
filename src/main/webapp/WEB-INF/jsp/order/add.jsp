@@ -16,7 +16,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>用户管理</h3>
+            <h3>订单管理</h3>
         </div>
 
     </div>
@@ -25,42 +25,36 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>创建用户</h2>
+                    <h2>创建订单</h2>
                     <div class="clearfix"></div>
                 </div>
                 <div class="x_content">
                     <br />
                     <form id="add_user" data-parsley-validate class="form-horizontal form-label-left" role="form">
+                        <span class="section">用户信息</span>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名(拼音)<span class="required">*</span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名<span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <input type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="cname">姓名(中文)
-                            </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="cname" name="cname" required="required" class="form-control col-md-7 col-xs-12">
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">手机
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">手机<span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <input type="text" id="mobile" name="mobile" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="password">密码<span class="required">*</span>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="addr">地址<span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="password" id="password" name="password" required="required" class="form-control col-md-7 col-xs-12">
+                                <input type="text" id="addr" name="addr" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">片区<span class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">选择片区</label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <select class="select2_single form-control" tabindex="-1" id="area_select">
                                     <option value="0">--</option>
@@ -70,38 +64,57 @@
                                 </select>
                             </div>
                         </div>
+
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">角色<span class="required">*</span></label>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">来源</label>
                             <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="role" class="btn-group" data-toggle="buttons">
+                                <div id="channel" class="btn-group" data-toggle="buttons">
                                     <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        管理员:<input type="radio" class="flat" name="role" id="admin" value="0" checked="checked"/>
+                                        到店:<input type="radio" class="flat" name="status" id="admin" value="0" checked="checked"/>
                                     </label>
                                     <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        送奶工:<input type="radio" class="flat" name="role" id="worker" value="1" />
+                                        奶工:<input type="radio" class="flat" name="status" id="worker" value="1" />
                                     </label>
                                 </div>
                             </div>
                         </div>
 
+                        <div class="ln_solid"></div>
+
+                        <span class="section">订购信息</span>
+
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12">状态<span class="required">*</span></label>
-                            <div class="col-md-6 col-sm-6 col-xs-12">
-                                <div id="status" class="btn-group" data-toggle="buttons">
-                                    <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        激活:<input type="radio" class="flat" name="status" id="on" value="1" checked="checked"/>
-                                    </label>
-                                    <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
-                                        失效:<input type="radio" class="flat" name="status" id="off" value="0" />
-                                    </label>
-                                </div>
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12">选择奶品</label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <select class="select2_single form-control" tabindex="-1" id="dairy_select">
+                                    <c:forEach var="dairy" items="${dairies}">
+                                        <option value="${dairy.id}">${dairy.name}</option>
+                                    </c:forEach>
+                                </select>
                             </div>
                         </div>
-                        <div class="ln_solid"></div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="num">订购数量<span class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input type="text" id="num" name="num" required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="pay">支付金额<span class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input type="text" id="pay" name="pay" required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+
+
                         <div class="form-group">
                             <div class="col-md-6 col-sm-6 col-xs-12 col-md-offset-3">
-                                <button type="button" class="btn createbtn btn-success" onclick="addUser()">保存</button>
-                                <button type="button" class="btn createbtn btn-primary" onclick="user.getList()">取消</button>
+                                <button type="button" class="btn createbtn btn-success" onclick="addCustomer()">添加</button>
+                                <button type="button" class="btn createbtn btn-primary" onclick="customer.getList()">取消</button>
                             </div>
                         </div>
                     </form>
@@ -116,27 +129,25 @@
 
 <script>
     initicheck();
-    function addUser() {
+    function addCustomer() {
         var param = {};
         param.name = $('#name').val();
-        param.cname = $('#cname').val();
         param.mobile = $('#mobile').val();
-        param.password = $('#password').val();
-        param.role = $("input[name='role']:checked").val();
+        param.addr = $('#addr').val();
+        param.channel = $('input:radio:checked').val();
         param.area = $('#area_select').find('option:selected').val();
-        param.status = $("input[name='status']:checked").val();
         if (param.name === ""){
             alert("请填写姓名");
             return;
         }
-        if (param.cname === ""){
-            alert("请填写中文姓名");
+        if (param.addr === ""){
+            alert("请填写地址");
             return;
         }
         if (param.mobile === ""){
             alert("请填写手机");
             return;
         }
-        user.add(param);
+        customer.add(param);
     }
 </script>

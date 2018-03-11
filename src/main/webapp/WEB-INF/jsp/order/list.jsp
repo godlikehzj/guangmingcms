@@ -36,25 +36,22 @@
                             <th>奶品</th>
                             <th>数量</th>
                             <th>创建日期</th>
-                            <th>来源</th>
+                            <th>结束日期</th>
                             <th>操作</th>
                         </tr>
                         </thead>
 
                         <tbody>
-                        <c:forEach var="customer" items="${customers}">
+                        <c:forEach var="order" items="${orders}">
                             <tr>
-                                <td>${customer.name}</td>
-                                <td>${customer.mobile}</td>
-                                <td>${customer.addr}</td>
-                                <td><c:forEach var="area" items="${areas}"><c:if test="${area.id == customer.area}">${area.name}</c:if> </c:forEach> </td>
-                                <td><fmt:formatDate value="${customer.createTime}" pattern="yyyy-MM-dd HH:mm"/></td>
-                                <td><c:if test="${customer.channel == 0}">到店</c:if>
-                                    <c:if test="${customer.channel == 1}">奶工</c:if>
-                                    <c:if test="${customer.channel == 2}">微信</c:if>
-                                </td>
-                                <td><a href="javascript:void(0);" onclick="customer.toModify(${customer.id})">修改</a> |
-                                    <a href="javascript:void(0);" onclick="customer.delete(${customer.id})">删除</a></td>
+                                <td>${order.name}</td>
+                                <td><c:forEach var="dairy" items="${dairies}"><c:if test="${order.dairyId == dairy.id}">${dairy.name}</c:if> </c:forEach> </td>
+                                <td>${order.num}</td>
+                                <td><fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                <td><fmt:formatDate value="${order.endDay}" pattern="yyyy-MM-dd HH:mm"/></td>
+                                <td><a href="javascript:void(0);" onclick="order.detail(${order.id})">查看</a> |
+                                    <a href="javascript:void(0);" onclick="order.toModify(${order.id})">修改</a> |
+                                    <a href="javascript:void(0);" onclick="order.delete(${order.id})">删除</a></td>
                             </tr>
                         </c:forEach>
 
