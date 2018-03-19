@@ -10,8 +10,7 @@ public class Dairy {
     private long id;
     private String name;
     private String description;
-    private int price;
-    private int status;
+    private long priceId;
 
     @Id
     @Column(name = "id")
@@ -44,23 +43,13 @@ public class Dairy {
     }
 
     @Basic
-    @Column(name = "price")
-    public int getPrice() {
-        return price;
+    @Column(name = "price_id")
+    public long getPriceId() {
+        return priceId;
     }
 
-    public void setPrice(int price) {
-        this.price = price;
-    }
-
-    @Basic
-    @Column(name = "status")
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
+    public void setPriceId(long priceId) {
+        this.priceId = priceId;
     }
 
     @Override
@@ -71,8 +60,7 @@ public class Dairy {
         Dairy dairy = (Dairy) o;
 
         if (id != dairy.id) return false;
-        if (price != dairy.price) return false;
-        if (status != dairy.status) return false;
+        if (priceId != dairy.priceId) return false;
         if (name != null ? !name.equals(dairy.name) : dairy.name != null) return false;
         if (description != null ? !description.equals(dairy.description) : dairy.description != null) return false;
 
@@ -84,8 +72,7 @@ public class Dairy {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + price;
-        result = 31 * result + status;
+        result = 31 * result + (int) (priceId ^ (priceId >>> 32));
         return result;
     }
 }

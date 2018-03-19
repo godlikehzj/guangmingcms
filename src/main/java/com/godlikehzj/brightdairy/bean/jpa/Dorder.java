@@ -8,16 +8,19 @@ import java.sql.Date;
 import java.sql.Timestamp;
 
 @Entity
-public class Order {
+public class Dorder {
     private long id;
+    private long customerId;
     private String name;
     private String mobile;
+    private String optionalMobile;
     private String addr;
     private long area;
     private byte channel;
-    private long dairyId;
-    private int num;
-    private Date startDay;
+    private long priceId;
+    private int buyNum;
+    private int freeNum;
+    private int remainDeliver;
     private Date endDay;
     private int pay;
     private Timestamp createTime;
@@ -30,6 +33,16 @@ public class Order {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    @Basic
+    @Column(name = "customer_id")
+    public long getCustomerId() {
+        return customerId;
+    }
+
+    public void setCustomerId(long customerId) {
+        this.customerId = customerId;
     }
 
     @Basic
@@ -50,6 +63,16 @@ public class Order {
 
     public void setMobile(String mobile) {
         this.mobile = mobile;
+    }
+
+    @Basic
+    @Column(name = "optional_mobile")
+    public String getOptionalMobile() {
+        return optionalMobile;
+    }
+
+    public void setOptionalMobile(String optionalMobile) {
+        this.optionalMobile = optionalMobile;
     }
 
     @Basic
@@ -83,33 +106,43 @@ public class Order {
     }
 
     @Basic
-    @Column(name = "dairy_id")
-    public long getDairyId() {
-        return dairyId;
+    @Column(name = "price_id")
+    public long getPriceId() {
+        return priceId;
     }
 
-    public void setDairyId(long dairyId) {
-        this.dairyId = dairyId;
-    }
-
-    @Basic
-    @Column(name = "num")
-    public int getNum() {
-        return num;
-    }
-
-    public void setNum(int num) {
-        this.num = num;
+    public void setPriceId(long priceId) {
+        this.priceId = priceId;
     }
 
     @Basic
-    @Column(name = "start_day")
-    public Date getStartDay() {
-        return startDay;
+    @Column(name = "buy_num")
+    public int getBuyNum() {
+        return buyNum;
     }
 
-    public void setStartDay(Date startDay) {
-        this.startDay = startDay;
+    public void setBuyNum(int buyNum) {
+        this.buyNum = buyNum;
+    }
+
+    @Basic
+    @Column(name = "free_num")
+    public int getFreeNum() {
+        return freeNum;
+    }
+
+    public void setFreeNum(int freeNum) {
+        this.freeNum = freeNum;
+    }
+
+    @Basic
+    @Column(name = "remain_deliver")
+    public int getRemainDeliver() {
+        return remainDeliver;
+    }
+
+    public void setRemainDeliver(int remainDeliver) {
+        this.remainDeliver = remainDeliver;
     }
 
     @Basic
@@ -147,20 +180,24 @@ public class Order {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        Order order = (Order) o;
+        Dorder dorder = (Dorder) o;
 
-        if (id != order.id) return false;
-        if (area != order.area) return false;
-        if (channel != order.channel) return false;
-        if (dairyId != order.dairyId) return false;
-        if (num != order.num) return false;
-        if (pay != order.pay) return false;
-        if (name != null ? !name.equals(order.name) : order.name != null) return false;
-        if (mobile != null ? !mobile.equals(order.mobile) : order.mobile != null) return false;
-        if (addr != null ? !addr.equals(order.addr) : order.addr != null) return false;
-        if (startDay != null ? !startDay.equals(order.startDay) : order.startDay != null) return false;
-        if (endDay != null ? !endDay.equals(order.endDay) : order.endDay != null) return false;
-        if (createTime != null ? !createTime.equals(order.createTime) : order.createTime != null) return false;
+        if (id != dorder.id) return false;
+        if (customerId != dorder.customerId) return false;
+        if (area != dorder.area) return false;
+        if (channel != dorder.channel) return false;
+        if (priceId != dorder.priceId) return false;
+        if (buyNum != dorder.buyNum) return false;
+        if (freeNum != dorder.freeNum) return false;
+        if (remainDeliver != dorder.remainDeliver) return false;
+        if (pay != dorder.pay) return false;
+        if (name != null ? !name.equals(dorder.name) : dorder.name != null) return false;
+        if (mobile != null ? !mobile.equals(dorder.mobile) : dorder.mobile != null) return false;
+        if (optionalMobile != null ? !optionalMobile.equals(dorder.optionalMobile) : dorder.optionalMobile != null)
+            return false;
+        if (addr != null ? !addr.equals(dorder.addr) : dorder.addr != null) return false;
+        if (endDay != null ? !endDay.equals(dorder.endDay) : dorder.endDay != null) return false;
+        if (createTime != null ? !createTime.equals(dorder.createTime) : dorder.createTime != null) return false;
 
         return true;
     }
@@ -168,14 +205,17 @@ public class Order {
     @Override
     public int hashCode() {
         int result = (int) (id ^ (id >>> 32));
+        result = 31 * result + (int) (customerId ^ (customerId >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (optionalMobile != null ? optionalMobile.hashCode() : 0);
         result = 31 * result + (addr != null ? addr.hashCode() : 0);
         result = 31 * result + (int) (area ^ (area >>> 32));
         result = 31 * result + (int) channel;
-        result = 31 * result + (int) (dairyId ^ (dairyId >>> 32));
-        result = 31 * result + num;
-        result = 31 * result + (startDay != null ? startDay.hashCode() : 0);
+        result = 31 * result + (int) (priceId ^ (priceId >>> 32));
+        result = 31 * result + buyNum;
+        result = 31 * result + freeNum;
+        result = 31 * result + remainDeliver;
         result = 31 * result + (endDay != null ? endDay.hashCode() : 0);
         result = 31 * result + pay;
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);

@@ -35,8 +35,9 @@
                             <th>姓名</th>
                             <th>奶品</th>
                             <th>数量</th>
-                            <th>创建日期</th>
+                            <th>付款</th>
                             <th>结束日期</th>
+                            <th>创建日期</th>
                             <th>操作</th>
                         </tr>
                         </thead>
@@ -45,10 +46,11 @@
                         <c:forEach var="order" items="${orders}">
                             <tr>
                                 <td>${order.name}</td>
-                                <td><c:forEach var="dairy" items="${dairies}"><c:if test="${order.dairyId == dairy.id}">${dairy.name}</c:if> </c:forEach> </td>
-                                <td>${order.num}</td>
+                                <td><c:forEach var="priceType" items="${priceTypes}"><c:if test="${order.priceId == priceType.id}">${priceType.name}</c:if> </c:forEach> </td>
+                                <td>${order.buyNum}</td>
+                                <td>${order.pay/100}元</td>
+                                <td><fmt:formatDate value="${order.endDay}" pattern="yyyy-MM-dd"/></td>
                                 <td><fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm"/></td>
-                                <td><fmt:formatDate value="${order.endDay}" pattern="yyyy-MM-dd HH:mm"/></td>
                                 <td><a href="javascript:void(0);" onclick="order.detail(${order.id})">查看</a> |
                                     <a href="javascript:void(0);" onclick="order.toModify(${order.id})">修改</a> |
                                     <a href="javascript:void(0);" onclick="order.delete(${order.id})">删除</a></td>

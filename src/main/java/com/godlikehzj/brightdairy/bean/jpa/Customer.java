@@ -1,9 +1,6 @@
 package com.godlikehzj.brightdairy.bean.jpa;
 
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 @Entity
@@ -11,13 +8,14 @@ public class Customer {
     private long id;
     private String name;
     private String mobile;
+    private String optionalMobile;
     private String addr;
     private long area;
-    private byte channel;
     private Timestamp createTime;
 
     @Id
     @Column(name = "id")
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
     public long getId() {
         return id;
     }
@@ -47,6 +45,16 @@ public class Customer {
     }
 
     @Basic
+    @Column(name = "optional_mobile")
+    public String getOptionalMobile() {
+        return optionalMobile;
+    }
+
+    public void setOptionalMobile(String optionalMobile) {
+        this.optionalMobile = optionalMobile;
+    }
+
+    @Basic
     @Column(name = "addr")
     public String getAddr() {
         return addr;
@@ -64,16 +72,6 @@ public class Customer {
 
     public void setArea(long area) {
         this.area = area;
-    }
-
-    @Basic
-    @Column(name = "channel")
-    public byte getChannel() {
-        return channel;
-    }
-
-    public void setChannel(byte channel) {
-        this.channel = channel;
     }
 
     @Basic
@@ -95,9 +93,10 @@ public class Customer {
 
         if (id != customer.id) return false;
         if (area != customer.area) return false;
-        if (channel != customer.channel) return false;
         if (name != null ? !name.equals(customer.name) : customer.name != null) return false;
         if (mobile != null ? !mobile.equals(customer.mobile) : customer.mobile != null) return false;
+        if (optionalMobile != null ? !optionalMobile.equals(customer.optionalMobile) : customer.optionalMobile != null)
+            return false;
         if (addr != null ? !addr.equals(customer.addr) : customer.addr != null) return false;
         if (createTime != null ? !createTime.equals(customer.createTime) : customer.createTime != null) return false;
 
@@ -109,9 +108,9 @@ public class Customer {
         int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (mobile != null ? mobile.hashCode() : 0);
+        result = 31 * result + (optionalMobile != null ? optionalMobile.hashCode() : 0);
         result = 31 * result + (addr != null ? addr.hashCode() : 0);
         result = 31 * result + (int) (area ^ (area >>> 32));
-        result = 31 * result + (int) channel;
         result = 31 * result + (createTime != null ? createTime.hashCode() : 0);
         return result;
     }

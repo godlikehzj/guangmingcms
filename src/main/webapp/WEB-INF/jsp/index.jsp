@@ -66,13 +66,15 @@
                             <%--</li>--%>
                             <li><a href="javascript:void(0)" onclick="user.getList()"><i class="fa fa-user"></i>员工管理 </a>
                             </li>
-                            <li><a href="javascript:void(0)" onclick="area.getList()"><i class="fa  fa-truck"></i>地区管理 </a>
+                            <li><a href="javascript:void(0)" onclick="area.getList()"><i class="fa  fa-truck"></i>片区管理 </a>
                             </li>
                             <li><a href="javascript:void(0)" onclick="dairy.getList()"><i class="fa  fa-tint"></i>奶品管理 </a>
                             </li>
                             <li><a href="javascript:void(0)" onclick="customer.getList()"><i class="fa  fa-users"></i>客户管理 </a>
                             </li>
-                        </ul>
+                            <li><a href="javascript:void(0)" onclick="order.getList()"><i class="fa  fa-users"></i>客户订单管理 </a>
+                            </li>
+                    </ul>
                     </div>
                 </div>
                 <!-- /sidebar menu -->
@@ -110,7 +112,7 @@
         </div>
         <footer>
             <div class="pull-right">
-                yihu - Jewelry Admin System powerd by <a style="color: blue;" href="#" onclick="getContent('contact')">godlikehzj</a>
+                bright dairy - guyue Admin System powerd by <a style="color: blue;" href="#" onclick="getContent('contact')">godlikehzj</a>
             </div>
             <div class="clearfix"></div>
         </footer>

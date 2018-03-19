@@ -15,7 +15,7 @@
 <div class="">
     <div class="page-title">
         <div class="title_left">
-            <h3>地区管理</h3>
+            <h3>片区管理</h3>
         </div>
 
     </div>
@@ -24,7 +24,7 @@
         <div class="col-md-12 col-sm-12 col-xs-12">
             <div class="x_panel">
                 <div class="x_title">
-                    <h2>地区列表</h2>
+                    <h2>片区列表</h2>
                     <button type="button" class="btn createbtn btn-success" onclick="area.toAdd()">创建</button>
                     <div class="clearfix"></div>
                 </div>

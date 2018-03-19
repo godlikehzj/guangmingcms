@@ -236,29 +236,37 @@ var area = {
 };
 
 var dairy = {
-    getList : function () {
+    getList : function (pid) {
         var url = "dairy/list";
         var param = {};
+        param.pid = pid;
         getContent(url, param);
     },
 
-    toAdd : function () {
-        var url = "dairy/toAdd";
+    toAddPrice : function () {
+        var url = "dairy/toAddPrice";
         var param = {};
         getContent(url, param);
     },
 
-    add : function (params) {
+    toAddDairy : function (pid) {
+        var url = "dairy/toAddDairy";
+        var param = {};
+        param.pid = pid;
+        getContent(url, param);
+    },
+
+    addPrice : function (params) {
         if(window.confirm('你确定要添加吗？')){
             $.ajax({
                 type : "POST",
-                url : "dairy/doAdd",
+                url : "dairy/doAddPrice",
                 data : params,
                 error : function() {
                 },
                 success : function(ret) {
                     if (ret.code === 0){
-                        dairy.getList();
+                        dairy.getList(ret.data);
                     }else{
                         alert(ret.msg);
                     }
@@ -269,23 +277,51 @@ var dairy = {
         }
     },
 
-    toModify : function (did) {
-        var url = "dairy/toModify";
+    addDairy : function (params) {
+        if(window.confirm('你确定要添加吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/doAddDairy",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList(ret.data);
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+
+    toModifyPrice : function (pid) {
+        var url = "dairy/toModifyPrice";
+        var param = {};
+        param.pid = pid;
+        getContent(url, param);
+    },
+
+    toModifyDairy : function (did) {
+        var url = "dairy/toModifyDairy";
         var param = {};
         param.did = did;
         getContent(url, param);
     },
-    modify : function (params) {
+    modifyPrice : function (params) {
         if(window.confirm('你确定要修改吗？')){
             $.ajax({
                 type : "POST",
-                url : "dairy/doModify",
+                url : "dairy/doModifyPrice",
                 data : params,
                 error : function() {
                 },
                 success : function(ret) {
                     if (ret.code === 0){
-                        dairy.getList();
+                        dairy.getList(ret.data);
                     }else{
                         alert(ret.msg);
                     }
@@ -295,19 +331,63 @@ var dairy = {
 
         }
     },
-    delete : function (did) {
+
+    modifyDairy : function (params) {
+        if(window.confirm('你确定要修改吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/doModifyDairy",
+                data : params,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList(ret.data);
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+
+    deletePrice : function (pid) {
         var param = {};
-        param.did = did;
+        param.pid = pid;
         if(window.confirm('你确定要删除吗？')){
             $.ajax({
                 type : "POST",
-                url : "dairy/delete",
+                url : "dairy/deletePrice",
                 data : param,
                 error : function() {
                 },
                 success : function(ret) {
                     if (ret.code === 0){
                         dairy.getList();
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }else{
+
+        }
+    },
+    deleteDairy : function (did) {
+        var param = {};
+        param.did = did;
+        if(window.confirm('你确定要删除吗？')){
+            $.ajax({
+                type : "POST",
+                url : "dairy/deleteDairy",
+                data : param,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        dairy.getList(ret.data);
                     }else{
                         alert(ret.msg);
                     }
