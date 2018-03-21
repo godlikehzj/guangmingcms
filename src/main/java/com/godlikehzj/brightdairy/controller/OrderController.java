@@ -32,6 +32,7 @@ public class OrderController {
 
     @RequestMapping(value = "list")
     public String getOrderList(Model model){
+        //test
         List<Dorder> order = orderRepository.findAll();
         model.addAttribute("orders", order);
 
