@@ -496,12 +496,12 @@ var order = {
         getContent(url, param);
     },
 
-    add : function (params) {
+    add : function (orderParam) {
         if(window.confirm('你确定要添加吗？')){
             $.ajax({
                 type : "POST",
                 url : "order/doAdd",
-                data : params,
+                data : orderParam,
                 error : function() {
                 },
                 success : function(ret) {

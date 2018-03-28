@@ -85,6 +85,7 @@
                                     <div class="col-md-4 col-sm-4 col-xs-12">
                                         <input type="text" id="mobile" name="mobile" required="required" class="form-control col-md-7 col-xs-12">
                                     </div>
+                                    <button type="button" class="btn createbtn btn-success" onclick="searchByMobile()">搜索</button>
                                 </div>
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="optional_mobile">备份手机
@@ -109,6 +110,19 @@
                                                 <option value="${area.id}">${area.name}</option>
                                             </c:forEach>
                                         </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">来源</label>
+                                    <div class="col-md-6 col-sm-6 col-xs-12">
+                                        <div id="channel" class="btn-group" data-toggle="buttons">
+                                            <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                到店:<input type="radio" class="flat" name="status" id="admin" value="0" checked="checked"/>
+                                            </label>
+                                            <label class="btn" data-toggle-class="btn-primary" data-toggle-passive-class="btn-default">
+                                                奶工:<input type="radio" class="flat" name="status" id="worker" value="1" />
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -200,6 +214,21 @@
                                         </select>
                                     </div>
                                 </div>
+
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12">星期</label>
+                                    <div class="col-md-2 col-sm-2 col-xs-6">
+                                        <select class="form-control" id="week_day" multiple="multiple">
+                                            <option value=1 >周一</option>
+                                            <option value=2 >周二</option>
+                                            <option value=3 >周三</option>
+                                            <option value=4 >周四</option>
+                                            <option value=5 >周五</option>
+                                            <option value=6 >周六</option>
+                                            <option value=7 >周日</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -215,8 +244,75 @@
 <script src="vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 
 <script>
+    function searchByMobile() {
+        var params = {};
+        params.mobile = $('#mobile').val();
+        $.ajax({
+            type : "POST",
+            url : "customer/search",
+            data : params,
+            error : function() {
+            },
+            success : function(ret) {
+                var cinfo = ret.data;
+                if (cinfo !== null){
+                    $('#name').val(cinfo.name);
+                    $('#mobile').val(cinfo.mobile);
+                    $('#optional_mobile').val(cinfo.optionalMobile);
+                    $('#addr').val(cinfo.addr);
+                    $("#area_select").find("option[value="+cinfo.area+"]").attr("selected",true);
+                }
+            }
+        });
+    }
+
+    function addOrder() {
+        var param = {};
+        param.name = $('#name').val();
+        param.mobile = $('#mobile').val();
+        param.optionalMobile = $('#optional_mobile').val();
+        param.addr = $('#addr').val();
+        param.channel = $('input:radio:checked').val();
+        param.area = $('#area_select').find('option:selected').val();
+        param.priceId = $('#dairy_select').find('option:selected').val();
+        param.buyNum = $('#buy_num').val();
+        param.freeNum = $('#free_num').val();
+        param.remainDeliver = $('#remain_deliver').val();
+        param.pay = $('#pay').val();
+        param.num = $('#deliver_num').val();
+        param.startDate = $('#begin_date').val();
+        if (param.name === ""){
+            alert("请填写姓名");
+            return;
+        }
+        if (param.addr === ""){
+            alert("请填写地址");
+            return;
+        }
+        if (param.mobile === ""){
+            alert("请填写手机");
+            return;
+        }
+        if (param.buyNum === ""){
+            alert("请填写购买数量");
+            return;
+        }
+        if (param.freeNum === ""){
+            alert("请填写赠送数量，没有填写0");
+            return;
+        }
+        if (param.remainDeliver === ""){
+            alert("请填写送奶总量");
+            return;
+        }
+        order.add(param);
+    }
+
     $(document).ready(function() {
-        $('#wizard').smartWizard();
+        $('#week_day').multiselect();
+        $('#wizard').smartWizard({onFinish:function () {
+            addOrder();
+        }});
 
         $('.buttonNext').addClass('btn btn-success');
         $('.buttonPrevious').addClass('btn btn-primary');
@@ -229,45 +325,7 @@
         }, function(start, end, label) {
             console.log(start.toISOString(), end.toISOString(), label);
         });
-        function addOrder() {
-            var param = {};
-            param.name = $('#name').val();
-            param.mobile = $('#mobile').val();
-            param.optionalMobile = $('#optional_mobile').val();
-            param.addr = $('#addr').val();
-            param.channel = $('input:radio:checked').val();
-            param.area = $('#area_select').find('option:selected').val();
-            param.dairyId = $('#dairy_select').find('option:selected').val();
-            param.buyNum = $('#buy_num').val();
-            param.freeNum = $('#free_num').val();
-            param.remainDeliver = $('#remain_deliver').val();
-            param.pay = $('#pay').val();
-            if (param.name === ""){
-                alert("请填写姓名");
-                return;
-            }
-            if (param.addr === ""){
-                alert("请填写地址");
-                return;
-            }
-            if (param.mobile === ""){
-                alert("请填写手机");
-                return;
-            }
-            if (param.buyNum === ""){
-                alert("请填写购买数量");
-                return;
-            }
-            if (param.freeNum === ""){
-                alert("请填写赠送数量，没有填写0");
-                return;
-            }
-            if (param.remainDeliver === ""){
-                alert("请填写送奶总量");
-                return;
-            }
-            order.add(param);
-        }
+
     });
 
 </script>

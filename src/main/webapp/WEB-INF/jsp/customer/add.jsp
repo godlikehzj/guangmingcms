@@ -32,17 +32,17 @@
                     <br />
                     <form id="add_user" data-parsley-validate class="form-horizontal form-label-left" role="form">
                         <div class="form-group">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名<span class="required">*</span>
-                            </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12">
-                                <input type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="control-label col-md-3 col-sm-3 col-xs-12" for="mobile">手机<span class="required">*</span>
                             </label>
                             <div class="col-md-4 col-sm-4 col-xs-12">
                                 <input type="text" id="mobile" name="mobile" required="required" class="form-control col-md-7 col-xs-12">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="name">姓名<span class="required">*</span>
+                            </label>
+                            <div class="col-md-4 col-sm-4 col-xs-12">
+                                <input type="text" id="name" required="required" class="form-control col-md-7 col-xs-12">
                             </div>
                         </div>
                         <div class="form-group">

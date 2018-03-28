@@ -43,6 +43,13 @@ public class CustomerController {
         return "customer/add";
     }
 
+    @RequestMapping(value = "search")
+    @ResponseBody
+    public Response searchCustomer(String mobile){
+        Customer customer = customerRepository.findByMobile(mobile);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), customer);
+    }
+
     @RequestMapping(value = "doAdd")
     @ResponseBody
     public Response doAddCustomer(Customer customer){

@@ -5,4 +5,5 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface CustomerRepository extends JpaRepository<Customer, Long> {
     Customer findByNameAndMobile(String name, String mobile);
+    Customer findByMobile(String mobile);
 }

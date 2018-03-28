@@ -5,12 +5,17 @@ import com.godlikehzj.brightdairy.bean.jpa.*;
 import com.godlikehzj.brightdairy.dao.*;
 import com.godlikehzj.brightdairy.utils.ApiStatus;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.ServletRequestDataBinder;
+import org.springframework.web.bind.annotation.InitBinder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -29,6 +34,19 @@ public class OrderController {
 
     @Autowired
     private CustomerRepository customerRepository;
+
+    @Autowired
+    private DeliverRuleRepository deliverRuleRepository;
+
+    @InitBinder
+    public void InitBinder(HttpServletRequest request,
+                           ServletRequestDataBinder binder) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat(
+                "yyyy-MM-dd");
+        dateFormat.setLenient(false);
+        binder.registerCustomEditor(Date.class, null, new CustomDateEditor(
+                dateFormat, true));
+    }
 
     @RequestMapping(value = "list")
     public String getOrderList(Model model){
@@ -55,7 +73,7 @@ public class OrderController {
 
     @RequestMapping(value = "doAdd")
     @ResponseBody
-    public Response doAddOrder(Dorder order){
+    public Response doAddOrder(Dorder order, DeliverRule deliverRule){
         Date now = new Date();
         Customer customer = customerRepository.findByNameAndMobile(order.getName(), order.getMobile());
 
@@ -69,19 +87,25 @@ public class OrderController {
         if (customer == null){
             customer2.setCreateTime(new Timestamp(now.getTime()));
         }else{
+            customer2.setCreateTime(customer.getCreateTime());
             customer2.setId(customer.getId());
         }
         customerRepository.save(customer2);
 
-        Integer days = order.getRemainDeliver();
+        Integer days = Math.abs(Math.floorDiv(Math.negateExact(order.getRemainDeliver()), deliverRule.getNum()));
+
         order.setCreateTime(new Timestamp(now.getTime()));
         Calendar calendar = Calendar.getInstance();
-        calendar.setTime(order.getCreateTime());
-        calendar.add(Calendar.DATE, days);
+        calendar.setTime(deliverRule.getStartDate());
+        calendar.add(Calendar.DATE, days - 1);
 
-        order.setCustomerId(customer.getId());
+        order.setCustomerId(customer2.getId());
         order.setEndDay(new java.sql.Date(calendar.getTimeInMillis()));
         orderRepository.save(order);
+
+        deliverRule.setOrderId(order.getId());
+        deliverRuleRepository.save(deliverRule);
+
         return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
     }
 }

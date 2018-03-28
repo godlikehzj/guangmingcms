@@ -36,6 +36,7 @@
 
     <!-- Custom Theme Style -->
     <link href="vendors/custom/custom.min.css" rel="stylesheet">
+    <link href="vendors/bootstrap-multiselect/css/bootstrap-multiselect.css" rel="stylesheet">
 </head>
 
 <body class="nav-md">
@@ -161,6 +162,7 @@
 <!-- Custom Theme Scripts -->
 <script src="vendors/custom/custom.min.js"></script>
 <script src="js/common.js"></script>
+<script src="vendors/bootstrap-multiselect/js/bootstrap-multiselect.js"></script>
 
 </body>
 </html>
