@@ -206,7 +206,7 @@
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">停奶类型</label>
                                     <div class="col-md-2 col-sm-2 col-xs-6">
-                                        <select class="select2_single form-control" tabindex="-1" id="stop_type">
+                                        <select class="select2_single form-control" tabindex="-1" id="stop_type" onchange="stop_change()">
                                             <option value=0 >每月</option>
                                             <option value=1 >每周</option>
                                             <option value=2 >单次</option>
@@ -215,18 +215,40 @@
                                     </div>
                                 </div>
 
-                                <div class="form-group">
+                                <div class="form-group stop_rule" id="monthly_stop">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="month_stop">每月日期(逗号分隔)<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <input type="text" id="month_stop" name="month_stop" required="required" class="form-control col-md-7 col-xs-12">
+                                    </div>
+                                </div>
+
+                                <div class="form-group stop_rule none" id="week_stop">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">星期</label>
-                                    <div class="col-md-2 col-sm-2 col-xs-6">
-                                        <select class="form-control" id="week_day" multiple="multiple">
-                                            <option value=1 >周一</option>
-                                            <option value=2 >周二</option>
-                                            <option value=3 >周三</option>
-                                            <option value=4 >周四</option>
-                                            <option value=5 >周五</option>
-                                            <option value=6 >周六</option>
-                                            <option value=7 >周日</option>
-                                        </select>
+                                    <div class="col-md-8 col-sm-8 col-xs-12">
+                                        <div class="checkbox">
+                                            <label>
+                                                <input type="checkbox" class="flat" value="1"> 周一
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="2"> 周二
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="3"> 周三
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="4"> 周四
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="5"> 周五
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="6"> 周六
+                                            </label>
+                                            <label>
+                                                <input type="checkbox" class="flat" value="7"> 周日
+                                            </label>
+                                        </div>
                                     </div>
                                 </div>
                             </form>
@@ -244,6 +266,15 @@
 <script src="vendors/jQuery-Smart-Wizard/js/jquery.smartWizard.js"></script>
 
 <script>
+    function stop_change() {
+        var ruleType = $('#stop_type').find('option:selected').val();
+        $(".stop_rule").addClass("none");
+        if (ruleType == 0)
+            $("#monthly_stop").removeClass("none");
+        else if (ruleType == 1)
+            $("#week_stop").removeClass("none");
+    }
+
     function searchByMobile() {
         var params = {};
         params.mobile = $('#mobile').val();
@@ -281,6 +312,20 @@
         param.pay = $('#pay').val();
         param.num = $('#deliver_num').val();
         param.startDate = $('#begin_date').val();
+        param.ruleType = $('#stop_type').find('option:selected').val();
+
+        if (param.ruleType == 0){
+            //每月
+            param.ruleContent = $('#month_stop').val();
+        }else if (param.ruleType == 1){
+            //每周
+            param.ruleContent = "";
+            $.each($('input:checkbox:checked'),function(){
+                param.ruleContent = param.ruleContent + $(this).val() + ",";
+            });
+            param.ruleContent = param.ruleContent.substring(0, param.ruleContent.length - 1);
+        }
+        console.log(param)
         if (param.name === ""){
             alert("请填写姓名");
             return;
@@ -309,7 +354,9 @@
     }
 
     $(document).ready(function() {
-        $('#week_day').multiselect();
+        $('#week_day').multiselect({
+            nonSelectedText:"请选择"
+        });
         $('#wizard').smartWizard({onFinish:function () {
             addOrder();
         }});

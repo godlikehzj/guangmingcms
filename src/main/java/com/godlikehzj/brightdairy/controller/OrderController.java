@@ -4,6 +4,7 @@ import com.godlikehzj.brightdairy.bean.entity.Response;
 import com.godlikehzj.brightdairy.bean.jpa.*;
 import com.godlikehzj.brightdairy.dao.*;
 import com.godlikehzj.brightdairy.utils.ApiStatus;
+import com.godlikehzj.brightdairy.utils.CalcDate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.propertyeditors.CustomDateEditor;
 import org.springframework.stereotype.Controller;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import javax.servlet.http.HttpServletRequest;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -73,7 +75,7 @@ public class OrderController {
 
     @RequestMapping(value = "doAdd")
     @ResponseBody
-    public Response doAddOrder(Dorder order, DeliverRule deliverRule){
+    public Response doAddOrder(Dorder order, DeliverRule deliverRule, StopRule stopRule){
         Date now = new Date();
         Customer customer = customerRepository.findByNameAndMobile(order.getName(), order.getMobile());
 
@@ -91,16 +93,16 @@ public class OrderController {
             customer2.setId(customer.getId());
         }
         customerRepository.save(customer2);
+        order.setCreateTime(new Timestamp(now.getTime()));
+        order.setCustomerId(customer2.getId());
+        List<StopRule> stopRules = new ArrayList<>();
+        if (!stopRule.getRuleContent().isEmpty())
+            stopRules.add(stopRule);
 
         Integer days = Math.abs(Math.floorDiv(Math.negateExact(order.getRemainDeliver()), deliverRule.getNum()));
+        Date endDay = CalcDate.getEndDay(deliverRule.getStartDate(), stopRules, days - 1);
 
-        order.setCreateTime(new Timestamp(now.getTime()));
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTime(deliverRule.getStartDate());
-        calendar.add(Calendar.DATE, days - 1);
-
-        order.setCustomerId(customer2.getId());
-        order.setEndDay(new java.sql.Date(calendar.getTimeInMillis()));
+        order.setEndDay(new java.sql.Date(endDay.getTime()));
         orderRepository.save(order);
 
         deliverRule.setOrderId(order.getId());
