@@ -12,7 +12,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <link href="vendors/iCheck/skins/flat/green.css" rel="stylesheet">
-<link href="vendors/bootstrap-daterangepicker/daterangepicker.css">
+<link href="vendors/bootstrap-daterangepicker/daterangepicker.css" rel="stylesheet">
 <div class="">
     <div class="page-title">
         <div class="title_left">
@@ -205,13 +205,49 @@
 
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12">停奶类型</label>
-                                    <div class="col-md-2 col-sm-2 col-xs-6">
+                                    <div class="col-md-3 col-sm-3 col-xs-6">
                                         <select class="select2_single form-control" tabindex="-1" id="stop_type" onchange="stop_change()">
                                             <option value=0 >每月</option>
                                             <option value=1 >每周</option>
                                             <option value=2 >单次</option>
                                             <option value=3 >永久</option>
                                         </select>
+                                    </div>
+                                </div>
+
+                                <div class="form-group stop_rule single_rule none">
+                                    <div class="controls">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rule_begin_date">开始日期<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-3 col-sm-3 col-xs-12 xdisplay_inputx form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="rule_begin_date" placeholder="请选择" aria-describedby="rule_begin">
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="rule_begin" class="sr-only">(success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <%--<div class="form-group stop_rule single_rule none">--%>
+                                    <%--<div class="controls">--%>
+                                        <%--<label class="control-label col-md-3 col-sm-3 col-xs-12" for="rule_end_date">结束日期<span class="required">*</span>--%>
+                                        <%--</label>--%>
+                                        <%--<div class="col-md-3 col-sm-3 col-xs-12 xdisplay_inputx form-group has-feedback">--%>
+                                            <%--<input type="text" class="form-control has-feedback-left" id="rule_end_date" placeholder="请选择" aria-describedby="rule_end">--%>
+                                            <%--<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>--%>
+                                            <%--<span id="rule_end" class="sr-only">(success)</span>--%>
+                                        <%--</div>--%>
+                                    <%--</div>--%>
+                                <%--</div>--%>
+
+                                <div class="form-group stop_rule single_rule none">
+                                    <div class="controls">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="rule_end_date">停奶日期<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-3 col-sm-3 col-xs-12 xdisplay_inputx form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="rule_end_date" placeholder="请选择" aria-describedby="rule_end">
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="rule_end" class="sr-only">(success)</span>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -251,6 +287,10 @@
                                         </div>
                                     </div>
                                 </div>
+
+                                <div style="padding-bottom: 40px">
+
+                                </div>
                             </form>
                         </div>
                     </div>
@@ -273,6 +313,9 @@
             $("#monthly_stop").removeClass("none");
         else if (ruleType == 1)
             $("#week_stop").removeClass("none");
+        else if (ruleType == 2){
+            $(".single_rule").removeClass("none");
+        }
     }
 
     function searchByMobile() {
@@ -324,8 +367,16 @@
                 param.ruleContent = param.ruleContent + $(this).val() + ",";
             });
             param.ruleContent = param.ruleContent.substring(0, param.ruleContent.length - 1);
+        }else if (param.ruleType == 2){
+            var single_begin = $('#rule_begin_date').val();
+            var single_end = $('#rule_end_date').val();
+            if (single_begin > single_end){
+                alert("开始日期不能晚于结束日期")
+                return;
+            }
+            param.ruleContent = single_begin + "," + single_end;
         }
-        console.log(param)
+        console.log(param);
         if (param.name === ""){
             alert("请填写姓名");
             return;
@@ -366,6 +417,21 @@
         $('.buttonFinish').addClass('btn btn-default');
 
         initicheck();
+
+        $('#rule_begin_date').daterangepicker({
+            singleDatePicker: true,
+            singleClasses: "picker_4"
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
+        $('#rule_end_date').daterangepicker({
+            singleDatePicker: true,
+            singleClasses: "picker_4"
+        }, function(start, end, label) {
+            console.log(start.toISOString(), end.toISOString(), label);
+        });
+
         $('#begin_date').daterangepicker({
             singleDatePicker: true,
             singleClasses: "picker_4"
