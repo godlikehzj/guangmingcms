@@ -52,7 +52,6 @@
                                 <td><fmt:formatDate value="${order.createTime}" pattern="yyyy-MM-dd HH:mm"/></td>
                                 <td><fmt:formatDate value="${order.endDay}" pattern="yyyy-MM-dd"/></td>
                                 <td><a href="javascript:void(0);" onclick="order.detail(${order.id})">查看</a> |
-                                    <a href="javascript:void(0);" onclick="order.toModify(${order.id})">修改</a> |
                                     <a href="javascript:void(0);" onclick="order.delete(${order.id})">删除</a></td>
                             </tr>
                         </c:forEach>
@@ -70,6 +69,7 @@
 <script src="vendors/datatables.net-bs/js/dataTables.bootstrap.min.js"></script>
 
 <script>
-    $('#datatable').dataTable();
+    $('#datatable').dataTable({
+        iDisplayLength:25});
 </script>
 

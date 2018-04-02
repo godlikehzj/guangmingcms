@@ -489,6 +489,11 @@ var order = {
         var param = {};
         getContent(url, param);
     },
+    detail : function (orderId) {
+        var url = "order/detail";
+        var param = {orderId:orderId};
+        getContent(url, param);
+    },
 
     toAdd : function () {
         var url = "order/toAdd";
@@ -525,20 +530,8 @@ var order = {
     },
     modify : function (params) {
         if(window.confirm('你确定要修改吗？')){
-            $.ajax({
-                type : "POST",
-                url : "order/doModify",
-                data : params,
-                error : function() {
-                },
-                success : function(ret) {
-                    if (ret.code === 0){
-                        order.getList();
-                    }else{
-                        alert(ret.msg);
-                    }
-                }
-            });
+            var url = "order/doModify";
+            getContent(url, params);
         }else{
 
         }

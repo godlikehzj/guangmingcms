@@ -62,6 +62,47 @@ public class OrderController {
         return "order/list";
     }
 
+    @RequestMapping(value = "detail")
+    public String getOrderDetail(Model model, Long orderId){
+        List<PriceType> priceTypes = priceTypeRepository.findAll();
+        model.addAttribute("priceTypes", priceTypes);
+
+        List<Area> areas = areaRepository.findAll();
+        model.addAttribute("areas", areas);
+
+        Dorder dorder = orderRepository.findOne(orderId);
+        model.addAttribute("order", dorder);
+
+        model.addAttribute("tab", 1);
+        return "order/detail";
+    }
+
+    @RequestMapping(value = "delete")
+    @ResponseBody
+    public Response deleteCustomer(Long oid){
+        orderRepository.delete(oid);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
+    }
+
+    @RequestMapping(value = "doModify")
+    public String modifyOrder(Model model, Dorder dorder){
+        List<PriceType> priceTypes = priceTypeRepository.findAll();
+        model.addAttribute("priceTypes", priceTypes);
+
+        List<Area> areas = areaRepository.findAll();
+        model.addAttribute("areas", areas);
+        Dorder old = orderRepository.findOne(dorder.getId());
+        dorder.setCreateTime(old.getCreateTime());
+        dorder.setEndDay(old.getEndDay());
+        dorder.setCustomerId(old.getCustomerId());
+        orderRepository.save(dorder);
+
+        model.addAttribute("order", dorder);
+
+        model.addAttribute("tab", 1);
+
+        return "order/detail";
+    }
     @RequestMapping(value = "toAdd")
     public String toAddOrder(Model model){
         List<PriceType> priceTypes = priceTypeRepository.findAll();

@@ -178,8 +178,6 @@
                         </div>
                         <div id="step-3">
                             <form id="deliver_rule" class="form-horizontal form-label-left">
-
-
                                 <div class="form-group">
                                     <label class="control-label col-md-3 col-sm-3 col-xs-12" for="deliver_num">每天数量<span class="required">*</span>
                                     </label>
