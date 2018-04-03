@@ -40,6 +40,9 @@ public class OrderController {
     @Autowired
     private DeliverRuleRepository deliverRuleRepository;
 
+    @Autowired
+    private StopRuleRepository stopRuleRepository;
+
     @InitBinder
     public void InitBinder(HttpServletRequest request,
                            ServletRequestDataBinder binder) {
@@ -74,6 +77,13 @@ public class OrderController {
         model.addAttribute("order", dorder);
 
         model.addAttribute("tab", 1);
+
+        List<DeliverRule> deliverRules = deliverRuleRepository.findAllByOrderId(orderId);
+        model.addAttribute("deliverRules", deliverRules);
+
+        List<StopRule> stopRules = stopRuleRepository.findAllByOrderId(orderId);
+        model.addAttribute("stopRules", stopRules);
+
         return "order/detail";
     }
 
