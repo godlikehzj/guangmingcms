@@ -149,27 +149,42 @@
 
         </div>
         <div class="tab-pane fade" id="delivery_rule">
-            <c:forEach var="deliverRule" items="deliverRules" varStatus="status">
-                <form class="form-horizontal form-label-left">
-                    <div class="form-group">
-                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="deliver_num">每天数量<span class="required">*</span>
-                        </label>
-                        <div class="col-md-4 col-sm-4 col-xs-12">
-                            <input type="text" id="deliver_num" name="deliver_num" required="required" class="form-control col-md-7 col-xs-12">
+            <c:forEach var="deliverRule" items="${deliverRules}" varStatus="status">
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                    <div class="x_panel">
+                        <div class="x_title">
+                            <h2>配送规则${status.index + 1}</h2>
+                            <button type="button" id="modify_deliver_btn" class="btn createbtn btn-success none" onclick="modifyDeliver()">确认修改</button>
+                            <button type="button" id="to_modify_deliver_btn" class="btn createbtn btn-primary" onclick="toModifyDeliver()">修改规则</button>
+                            <div class="clearfix"></div>
+                        </div>
+                        <div class="x_content">
+                            <form class="form-horizontal form-label-left">
+                                <input type="text" class="none" value="${deliverRule.id}">
+                                <div class="form-group">
+                                    <label class="control-label col-md-3 col-sm-3 col-xs-12" for="deliver_num">每天数量<span class="required">*</span>
+                                    </label>
+                                    <div class="col-md-4 col-sm-4 col-xs-12">
+                                        <input type="text" id="deliver_num" name="deliver_num" value="${deliverRule.num}" required="required" class="form-control col-md-7 col-xs-12" readonly="readonly">
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <div class="controls">
+                                        <label class="control-label col-md-3 col-sm-3 col-xs-12" for="begin_date">开始日期<span class="required">*</span>
+                                        </label>
+                                        <div class="col-md-4 col-sm-4 col-xs-12 xdisplay_inputx form-group has-feedback">
+                                            <input type="text" class="form-control has-feedback-left" id="begin_date" readonly="readonly" value="<fmt:formatDate value="${deliverRule.startDate}" pattern="yyyy-MM-dd"/>" placeholder="请选择" aria-describedby="inputSuccess2Status4">
+                                            <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
+                                            <span id="inputSuccess2Status4" class="sr-only">(success)</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </form>
                         </div>
                     </div>
-                    <div class="control-group">
-                        <div class="controls">
-                            <label class="control-label col-md-3 col-sm-3 col-xs-12" for="begin_date">开始日期<span class="required">*</span>
-                            </label>
-                            <div class="col-md-4 col-sm-4 col-xs-12 xdisplay_inputx form-group has-feedback">
-                                <input type="text" class="form-control has-feedback-left" id="begin_date" placeholder="请选择" aria-describedby="inputSuccess2Status4">
-                                <span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true"></span>
-                                <span id="inputSuccess2Status4" class="sr-only">(success)</span>
-                            </div>
-                        </div>
-                    </div>
-                </form>
+                </div>
+
 
             </c:forEach>
         </div>
@@ -185,6 +200,15 @@
 <script src="vendors/iCheck/icheck.min.js"></script>
 <script>
     initicheck();
+
+    function toModifyDeliver() {
+        $("#modify_deliver_btn").removeClass("none");
+        $("#to_modify_deliver_btn").addClass("none");
+    }
+
+    function modifyDeliver() {
+
+    }
 
     function toModifyOrder() {
         if(window.confirm('你确定要修改该订单吗？')){
