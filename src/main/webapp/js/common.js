@@ -489,10 +489,38 @@ var order = {
         var param = {};
         getContent(url, param);
     },
-    detail : function (orderId) {
+    detail : function (orderId, tab) {
         var url = "order/detail";
         var param = {orderId:orderId};
+        if (tab !== undefined)
+            param.tab = tab;
+
         getContent(url, param);
+    },
+
+    toAddDeliver : function (orderId) {
+        var url = "order/toAddDeliver";
+        var param = {orderId:orderId};
+        getContent(url, param);
+    },
+
+    addDeliver : function (param) {
+        if(window.confirm('你确定要添加吗？')){
+            $.ajax({
+                type : "POST",
+                url : "order/doAddDeliver",
+                data : param,
+                error : function() {
+                },
+                success : function(ret) {
+                    if (ret.code === 0){
+                        order.detail(param.orderId, 2);
+                    }else{
+                        alert(ret.msg);
+                    }
+                }
+            });
+        }
     },
 
     toAdd : function () {

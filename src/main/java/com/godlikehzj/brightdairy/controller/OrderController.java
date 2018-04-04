@@ -66,7 +66,7 @@ public class OrderController {
     }
 
     @RequestMapping(value = "detail")
-    public String getOrderDetail(Model model, Long orderId){
+    public String getOrderDetail(Model model, Long orderId, Integer tab){
         List<PriceType> priceTypes = priceTypeRepository.findAll();
         model.addAttribute("priceTypes", priceTypes);
 
@@ -76,7 +76,10 @@ public class OrderController {
         Dorder dorder = orderRepository.findOne(orderId);
         model.addAttribute("order", dorder);
 
-        model.addAttribute("tab", 1);
+        if (tab == null)
+            model.addAttribute("tab", 1);
+        else
+            model.addAttribute("tab", tab);
 
         List<DeliverRule> deliverRules = deliverRuleRepository.findAllByOrderId(orderId);
         model.addAttribute("deliverRules", deliverRules);
@@ -85,6 +88,20 @@ public class OrderController {
         model.addAttribute("stopRules", stopRules);
 
         return "order/detail";
+    }
+
+    @RequestMapping(value = "toAddDeliver")
+    public String toAddDeliver(Model model, Long orderId){
+        model.addAttribute("orderId", orderId);
+
+        return "order/addDeliver";
+    }
+
+    @RequestMapping(value = "doAddDeliver")
+    @ResponseBody
+    public Response doAddDeliver(DeliverRule deliverRule){
+        deliverRuleRepository.save(deliverRule);
+        return new Response(ApiStatus.ok, ApiStatus.msg.get(ApiStatus.ok), null);
     }
 
     @RequestMapping(value = "delete")
